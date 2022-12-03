@@ -9,10 +9,9 @@ var input = readInputArray().compactMap({Array($0)})
 func part2() {
     var count = 0
     while input.count >= 3 {
-        let three = input.prefix(3).map({Set($0)})
-        let common = String(three[0].filter(three[1].contains).filter(three[2].contains))
+        let group = input.prefix(3).map(Set.init)
+        let common = String(group[0].intersection(group[1]).intersection(group[2]))
         count += Int(characterMappings.firstIndex(of: common) ?? 0)
-        
         input.removeFirst(3)
     }
     print(count)
@@ -20,12 +19,15 @@ func part2() {
 
 func part1() {
     var i = input.compactMap({[$0.prefix($0.count/2), $0.suffix($0.count/2)]})
-    print(i)
-
     let x = i.map({String(Set($0[0]).intersection(Set($0[1])))}).map({Int(characterMappings.firstIndex(of: $0) ?? 0)})
-    print(x)
-
     print(x.reduce(0,+))
 }
+
+part1()
+part2()
+
+//func getValue(char: String) -> Int {
+//    return char[0].asciiValue - Character("a").asciiValue! + 1
+//}
 
 //: [Next](@next)
