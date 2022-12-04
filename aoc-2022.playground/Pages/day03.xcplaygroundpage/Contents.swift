@@ -19,15 +19,13 @@ func part2() {
 
 func part1() {
     var i = input.compactMap({[$0.prefix($0.count/2), $0.suffix($0.count/2)]})
-    let x = i.map({String(Set($0[0]).intersection(Set($0[1])))}).map({Int(characterMappings.firstIndex(of: $0) ?? 0)})
+    let x = i.map({
+        String(Set($0[0]).intersection(Set($0[1])))})
+        .map({Int(characterMappings.firstIndex(of: $0) ?? 0)})
     print(x.reduce(0,+))
 }
 
 part1()
 part2()
-
-//func getValue(char: String) -> Int {
-//    return char[0].asciiValue - Character("a").asciiValue! + 1
-//}
 
 //: [Next](@next)

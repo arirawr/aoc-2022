@@ -2,7 +2,7 @@
 
 import Foundation
 
-let input = readInputArray()
+let input = readInputArray().dropLast()
 
 enum Shape: Int {
     case rock = 1
@@ -17,40 +17,32 @@ enum Result: Int {
 }
 
 func part1() {
+    print(input)
     let rounds = input.compactMap({$0.split(separator: " ").compactMap({getShape(code: String($0))})})
-    print(rounds)
-
     var score = 0
-    for i in rounds {
-        if i.count > 0 {
-            score += i[1].rawValue
-            score += resolveRound(a: i[0], b: i[1])
-        }
+    
+    for r in rounds {
+        score += r[1].rawValue
+        score += resolveRound(a: r[0], b: r[1])
     }
-
     print(score)
 }
 
 func part2() {
     let rounds = input.compactMap({$0.split(separator: " ")})
-    
     var score = 0
     
-    for round in rounds {
-        var opponent: Shape
-        var result: Result
+    for r in rounds {
+        let opponent = getShape(code: String(r[0]))
+        let result = getResult(code: String(r[1]))
         
-        if round.count == 2 {
-            opponent = getShape(code: String(round[0]))
-            result = getResult(code: String(round[1]))
-            
-            score += result.rawValue
-            score += play(opponent: opponent, result: result).rawValue
-        }
+        score += result.rawValue
+        score += play(opponent: opponent, result: result).rawValue
     }
-    
     print(score)
 }
+
+part1()
 part2()
 
 func play(opponent: Shape, result: Result) -> Shape {
@@ -103,9 +95,6 @@ func getResult(code: String) -> Result {
 }
 
 func resolveRound(a: Shape, b: Shape) -> Int {
-//    if a == b {
-//        return 3
-//    }
     switch a {
         case .rock:
             switch b {
